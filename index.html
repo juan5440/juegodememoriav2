@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Juego de Memoria Bíblica</title>
+
+    <meta name="description" content="Juego de memoria bíblica con 10 niveles progresivos. Aprende historias y personajes bíblicos mientras juegas." />
+    <meta name="author" content="Dualite Alpha" />
+
+    <meta property="og:title" content="Juego de Memoria Bíblica" />
+    <meta property="og:description" content="Juego de memoria bíblica con 10 niveles progresivos. Aprende historias y personajes bíblicos mientras juegas." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://ibb.co/67X3xfSV" />
+    <meta property="og:image:alt" content="Juego de Memoria Bíblica - Aprende historias bíblicas mientras juegas" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Juego de Memoria Bíblica" />
+    <meta name="twitter:description" content="Juego de memoria bíblica con 10 niveles progresivos. Aprende historias y personajes bíblicos mientras juegas." />
+    <meta name="twitter:site" content="@dualitedev" />
+    <meta name="twitter:image" content="https://ibb.co/67X3xfSV" />
+
+    <link rel="canonical" href="https://alpha.dualite.dev" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Juego de Memoria Bíblica",
+      "url": "https://alpha.dualite.dev",
+      "description": "Juego de memoria bíblica con 10 niveles progresivos. Aprende historias y personajes bíblicos mientras juegas.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Dualite Alpha"
+      }
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="game-container">
+        <!-- Header -->
+        <header class="game-header">
+          <h1 class="game-title">🙏 Juego de Memoria Bíblica</h1>
+          <div class="game-stats">
+            <div class="stat">
+              <span class="stat-label">Nivel:</span>
+              <span id="current-level" class="stat-value">1</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Puntuación:</span>
+              <span id="score" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Intentos:</span>
+              <span id="attempts" class="stat-value">0</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Pares:</span>
+              <span id="pairs-found" class="stat-value">0</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Game Board -->
+        <main class="game-main">
+          <div class="level-info">
+            <h2 id="level-title">Nivel 1: Personajes del Génesis</h2>
+            <p id="level-description">Encuentra las parejas de personajes y sus historias</p>
+          </div>
+
+          <div id="game-board" class="game-board">
+            <!-- Las cartas se generarán dinámicamente -->
+          </div>
+
+          <div class="game-controls">
+            <button id="levels-menu-btn" class="btn btn-menu">📋 Niveles</button>
+            <button id="new-game-btn" class="btn btn-primary">🔄 Reiniciar</button>
+            <button id="hint-btn" class="btn btn-secondary">💡 Pista</button>
+            <button id="pause-btn" class="btn btn-secondary">⏸️ Pausa</button>
+          </div>
+        </main>
+
+        <!-- Modal de Menú de Niveles -->
+        <div id="levels-modal" class="modal">
+          <div class="modal-content levels-menu">
+            <h2>📚 Selecciona un Nivel</h2>
+            <div class="levels-grid" id="levels-grid">
+              <!-- Los niveles se generarán dinámicamente -->
+            </div>
+            <div class="modal-buttons">
+              <button id="close-levels-btn" class="btn btn-secondary">Cerrar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal de Victoria -->
+        <div id="victory-modal" class="modal">
+          <div class="modal-content victory-content">
+            <h2>🎉 ¡Nivel Completado!</h2>
+            <div id="victory-stats">
+              <p id="victory-message">Has completado el nivel</p>
+              <div class="victory-details">
+                <div class="victory-stat">
+                  <span class="victory-icon">🎯</span>
+                  <span>Intentos: <strong id="victory-attempts">0</strong></span>
+                </div>
+                <div class="victory-stat">
+                  <span class="victory-icon">⭐</span>
+                  <span>Puntos: <strong id="victory-points">0</strong></span>
+                </div>
+                <div class="victory-stat">
+                  <span class="victory-icon">💎</span>
+                  <span>Bonus: <strong id="victory-bonus">0</strong></span>
+                </div>
+              </div>
+            </div>
+            <div class="modal-buttons">
+              <button id="next-level-btn" class="btn btn-primary">Siguiente Nivel ➡️</button>
+              <button id="replay-btn" class="btn btn-secondary">🔄 Repetir</button>
+              <button id="levels-from-victory-btn" class="btn btn-menu">📋 Niveles</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal de Pausa -->
+        <div id="pause-modal" class="modal">
+          <div class="modal-content">
+            <h2>⏸️ Juego Pausado</h2>
+            <p>El juego está pausado. Presiona continuar para seguir jugando.</p>
+            <div class="modal-buttons">
+              <button id="resume-btn" class="btn btn-primary">▶️ Continuar</button>
+              <button id="restart-btn" class="btn btn-secondary">🔄 Reiniciar Nivel</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal de Juego Completado -->
+        <div id="complete-modal" class="modal">
+          <div class="modal-content complete-content">
+            <h2>🏆 ¡Juego Completado!</h2>
+            <div class="completion-celebration">
+              <div class="celebration-icon">🎊</div>
+              <p>¡Has completado todos los 10 niveles!</p>
+              <p>Has demostrado gran conocimiento bíblico</p>
+            </div>
+            <div class="final-stats">
+              <div class="final-stat">
+                <span class="final-icon">🏆</span>
+                <span>Puntuación Final</span>
+                <strong id="final-score">0</strong>
+              </div>
+            </div>
+            <div class="modal-buttons">
+              <button id="play-again-btn" class="btn btn-primary">🔄 Jugar de Nuevo</button>
+              <button id="levels-from-complete-btn" class="btn btn-menu">📋 Niveles</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
